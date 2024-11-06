@@ -27,27 +27,14 @@
     const initialHeight = 1080;
     const aspectRatio = initialWidth / initialHeight;
 
-    function setCanvasSize(width, height) {
-      const canvas = document.querySelector("#unity-canvas");
-      canvas.style.width = width + "px";
-      canvas.style.height = height + "px";
+   function resizeCanvas() {
+        const canvas = document.getElementById("unity-canvas");
+        canvas.style.width = window.innerWidth + "px";
+        canvas.style.height = window.innerHeight + "px";
     }
 
-    function updateCanvasSize() {
-      let width = window.innerWidth;
-      let height = window.innerHeight;
-
-      if (width / height > aspectRatio) {
-        width = height * aspectRatio;
-      } else {
-        height = width / aspectRatio;
-      }
-
-      setCanvasSize(width, height);
-    }
-
-    window.addEventListener('resize', updateCanvasSize);
-    //window.addEventListener('load', updateCanvasSize);
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("load", resizeCanvas); // İlk yükleme anında ayarlar
 
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
       var meta = document.createElement('meta');
