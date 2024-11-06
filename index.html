@@ -43,8 +43,9 @@
       setCanvasSize(width, height);
     }
 
+    
+    window.addEventListener('load', updateCanvasSize);
     window.addEventListener('resize', updateCanvasSize);
-    //window.addEventListener('load', updateCanvasSize);
 
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
       var meta = document.createElement('meta');
