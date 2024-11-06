@@ -5,36 +5,46 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Unity WebGL Player | Bricks Breaker</title>
   <style>
-    body, html {
-        margin: 0;
-        padding: 0;
-        overflow: hidden; /* Kaydırma çubuklarını gizler */
-        height: 100%;
-        width: 100%;
+    /* Dikey ortalamak için body'nin kendisini flex container yapıyoruz */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
     }
-    
-    #unity-canvas {
-        width: 100vw; /* Görüntü genişliğine göre tam ekran yapar */
-        height: 100vh; /* Görüntü yüksekliğine göre tam ekran yapar */
-    }
-</style>
+  </style>
 </head>
 <body>
- 
+  <canvas id="unity-canvas" width="1920" height="1080" style="background: #1F1F20;"></canvas>
   <script src="Build/BrickBreakerWebGL.loader.js"></script>
   <script>
     const initialWidth = 1920;
     const initialHeight = 1080;
     const aspectRatio = initialWidth / initialHeight;
 
-   function resizeCanvas() {
-        const canvas = document.getElementById("unity-canvas");
-        canvas.style.width = window.innerWidth + "px";
-        canvas.style.height = window.innerHeight + "px";
+    function setCanvasSize(width, height) {
+      const canvas = document.querySelector("#unity-canvas");
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
     }
 
-    window.addEventListener("resize", resizeCanvas);
-    window.addEventListener("load", resizeCanvas); // İlk yükleme anında ayarlar
+    function updateCanvasSize() {
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+
+      if (width / height > aspectRatio) {
+        width = height * aspectRatio;
+      } else {
+        height = width / aspectRatio;
+      }
+
+      setCanvasSize(width, height);
+    }
+
+    window.addEventListener('resize', updateCanvasSize);
+    //window.addEventListener('load', updateCanvasSize);
 
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
       var meta = document.createElement('meta');
