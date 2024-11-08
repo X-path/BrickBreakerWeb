@@ -1,28 +1,58 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Bricks Breaker</title>
-  </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=960 height=600 style="width: 960px; height: 600px; background: #1F1F20"></canvas>
-    <script src="Build/BrickBreakerWebGL.loader.js"></script>
-    <script>
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Unity WebGL Player | Bricks Breaker</title>
+  <style>
+     <body style="text-align: center; padding: 0; border: 0; margin: 0;">
+   
+  </style>
+</head>
+<body>
+  <canvas id="unity-canvas" width="1920" height="1080" style="background: #1F1F20;"></canvas>
+  <script src="Build/BrickBreakerWebGL.loader.js"></script>
+  <script>
+    const initialWidth = 1920;
+    const initialHeight = 1080;
+    const aspectRatio = initialWidth / initialHeight;
 
-        var canvas = document.querySelector("#unity-canvas");
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        canvas.style.position = "fixed";
+    function setCanvasSize(width, height) {
+      const canvas = document.querySelector("#unity-canvas");
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+    }
 
-        document.body.style.textAlign = "left";
+    function updateCanvasSize() {
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+
+      if (width / height > aspectRatio) {
+        width = height * aspectRatio;
+      } else {
+        height = width / aspectRatio;
       }
+
+      setCanvasSize(width, height);
+    }
+
+    window.addEventListener('resize', updateCanvasSize);
+    //window.addEventListener('load', updateCanvasSize);
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      var meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+      document.getElementsByTagName('head')[0].appendChild(meta);
+
+      var canvas = document.querySelector("#unity-canvas");
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      canvas.style.position = "fixed"; 
+
+      document.body.style.textAlign = "left";
+    }
+
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/ff1b0ea418eadc01ad73387465bcd28c.data.unityweb",
