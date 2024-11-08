@@ -6,7 +6,15 @@
   <title>Unity WebGL Player | Bricks Breaker</title>
 </head>
 <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-  
+  <style>
+    /* Dikey ortalamak için body'nin kendisini flex container yapıyoruz */
+    body {
+     display: flex;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
   </style>
   <canvas id="unity-canvas" width="1920" height="1080" style="width: 1920px; height: 1080px; background: #1F1F20"></canvas>
   <script src="Build/BrickBreakerWebGL.loader.js"></script>
